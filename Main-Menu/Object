@@ -1,0 +1,37 @@
+menu[0] = "Start";
+menu[1] = "Continue";
+menu[2] = "Settings";
+menu[3] = "Quit";
+
+space = 64;
+mpos = 0;
+
+//Step
+var move = 0;
+move -= max(keyboard_check_pressed(vk_up),keyboard_check_pressed(ord("W")));
+move += max(keyboard_check_pressed(vk_down),keyboard_check_pressed(ord("S")));
+
+if (move != 0)
+{
+    mpos += move;
+    if (mpos < 0) mpos = array_length_1d(menu) - 1;
+    if (mpos > array_length_1d(menu) - 1) mpos = 0;
+}
+
+var push;
+push = max(keyboard_check_released(vk_enter),keyboard_check_released(vk_shift),keyboard_check_released(vk_space), 0);
+
+if (push == 1) scr_menu(); 
+
+//Draw
+draw_set_halign(fa_left);
+draw_set_valign(fa_middle);
+draw_set_font(fnt_options);
+draw_set_color(c_white);
+
+var m;
+for (m = 0; m < array_length_1d(menu) m += 1)
+{
+    draw_text(x + space,y + (m * space),string(menu[m]));
+}
+draw_sprite(sprite_index, 0, x + 16, y + mpos * space);
